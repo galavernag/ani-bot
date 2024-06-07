@@ -2,6 +2,9 @@
   "name": "ani-bot",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+    "dev": "bun run --env-file=.env --watch src/index.ts"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },

@@ -1,6 +1,8 @@
 import {
   ButtonStyle,
   CommandInteraction,
+  ButtonBuilder,
+  ActionRowBuilder,
   ComponentType,
   EmbedBuilder,
   SlashCommandBuilder,
@@ -12,7 +14,14 @@ import {
 
 import { searchAnime } from "./_animes";
 import { getAnimeEpisodes } from "./_episodes";
+
+import { Client } from "discord.js-selfbot-v13";
+import { Streamer, streamLivestreamVideo } from "@dank074/discord-video-stream";
+
 import axios from "axios";
+
+const streamer = new Streamer(new Client());
+await streamer.client.login(process.env.DISCORD_SELF_BOT_TOKEN);
 
 const baseSiteURL = "https://animefire.plus/";
 
@@ -121,6 +130,56 @@ async function execute(interaction: CommandInteraction) {
       } else {
         link_to_play = quality.src;
       }
+    }
+
+    //@ts-expect-error
+    const voiceChannel = interaction.member?.voice.channel;
+
+    await streamer.joinVoice(voiceChannel.guild.id, voiceChannel.id);
+
+    const udp = await streamer.createStream({
+      // stream options here
+    });
+
+    const previousButton = new ButtonBuilder()
+      .setCustomId("previous")
+      .setLabel("Previous")
+      .setStyle(ButtonStyle.Primary);
+
+    const pauseButton = new ButtonBuilder()
+      .setCustomId("pause")
+      .setLabel("Pause")
+      .setStyle(ButtonStyle.Primary);
+
+    const stopButton = new ButtonBuilder()
+      .setCustomId("stop")
+      .setLabel("Stop")
+      .setStyle(ButtonStyle.Danger);
+
+    const nextButton = new ButtonBuilder()
+      .setCustomId("next")
+      .setLabel("Next")
+      .setStyle(ButtonStyle.Primary);
+
+    // Create the action row with the buttons
+    const actionRow = new ActionRowBuilder<ButtonBuilder>().addComponents(
+      previousButton,
+      pauseButton,
+      stopButton,
+      nextButton
+    );
+
+    udp.mediaConnection.setSpeaking(true);
+    udp.mediaConnection.setVideoStatus(true);
+    try {
+      const res = await streamLivestreamVideo(link_to_play, udp);
+
+      console.log("Finished playing video " + res);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      udp.mediaConnection.setSpeaking(false);
+      udp.mediaConnection.setVideoStatus(false);
     }
   } catch (error: any) {
     console.error(error);

@@ -1,0 +1,18 @@
+const voiceChannel = interaction.member.voice.channel;
+
+if (!voiceChannel) {
+  await interaction.reply(
+    "Você precisa estar em um canal de voz para eu entrar!"
+  );
+}
+
+try {
+  const connection = joinVoiceChannel({
+    channelId: voiceChannel.id,
+    guildId: voiceChannel.guild.id,
+    adapterCreator: voiceChannel.guild.voiceAdapterCreator,
+  });
+} catch (error) {
+  console.error(error);
+  await interaction.reply("Ocorreu um erro ao tentar entrar no canal de voz!");
+}

@@ -39,7 +39,7 @@ export async function selectAnimeWithDiscord(
     );
 
   const select = new StringSelectMenuBuilder()
-    .setCustomId("starter")
+    .setCustomId("anime_select")
     .setPlaceholder("🎥 Selecione um anime")
     .addOptions(
       animeNames.map(animeName =>
@@ -55,7 +55,7 @@ export async function selectAnimeWithDiscord(
   });
 
   const filter = (i: Interaction) =>
-    i.isStringSelectMenu() && i.customId === "starter";
+    i.isStringSelectMenu() && i.customId === "anime_select";
 
   const collector = response.createMessageComponentCollector({
     filter,

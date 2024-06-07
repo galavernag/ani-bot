@@ -15,12 +15,14 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@dank074/discord-video-stream": "^3.2.0",
     "@discordjs/opus": "^0.9.0",
     "@discordjs/voice": "^0.17.0",
     "axios": "^1.7.2",
     "bufferutil": "^4.0.8",
     "cheerio": "^1.0.0-rc.12",
     "discord.js": "^14.12.3",
+    "discord.js-selfbot-v13": "^3.1.4",
     "libsodium-wrappers": "^0.7.13",
     "mocha": "10.4.0",
     "selenium-webdriver": "^4.21.0",

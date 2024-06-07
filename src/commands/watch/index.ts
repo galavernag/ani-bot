@@ -10,7 +10,7 @@ import {
   type Interaction,
 } from "discord.js";
 
-import { searchAnime } from "./_searchAnime";
+import { searchAnime } from "./_animes";
 import { getAnimeEpisodes } from "./_episodes";
 import axios from "axios";
 
@@ -106,7 +106,6 @@ async function execute(interaction: CommandInteraction) {
       episode_link.replace("animes", "video")
     );
 
-    console.log(api_response.data);
     let link_to_play: string = "";
 
     for (const quality of api_response.data) {

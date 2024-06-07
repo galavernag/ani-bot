@@ -23,6 +23,8 @@ async function main() {
     await fs.readdir(path.resolve(__dirname, "commands"), { recursive: true })
   ).filter(file => file.endsWith(".ts") && !file.includes("_"));
 
+  console.log(commandFiles);
+
   for (const file of commandFiles) {
     const command: Command = await import(
       path.resolve(__dirname, "commands", file)

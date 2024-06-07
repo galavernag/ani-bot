@@ -21,7 +21,7 @@ async function main() {
   // Carregar comandos
   const commandFiles = (
     await fs.readdir(path.resolve(__dirname, "commands"), { recursive: true })
-  ).filter(file => file.endsWith(".ts"));
+  ).filter(file => file.endsWith(".ts") && !file.includes("_"));
 
   for (const file of commandFiles) {
     const command: Command = await import(

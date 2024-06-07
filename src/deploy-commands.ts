@@ -8,7 +8,7 @@ const botId = "1248444248639016960";
 
 const commandFiles = (
   await fs.readdir(path.resolve(__dirname, "commands"), { recursive: true })
-).filter(cmd => cmd.endsWith(".ts"));
+).filter(cmd => cmd.endsWith(".ts") && !cmd.includes("_"));
 const commands = [];
 
 for (const file of commandFiles) {
